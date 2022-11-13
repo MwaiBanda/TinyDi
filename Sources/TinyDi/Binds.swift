@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-struct Binds<T> {
+public struct Binds<T> {
     var wrappedValue: T
     var named: String
     

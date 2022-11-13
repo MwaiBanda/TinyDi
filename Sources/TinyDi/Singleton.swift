@@ -8,7 +8,7 @@
 import Foundation
 
 @resultBuilder
-struct Singleton {
+public struct Singleton {
     static var named: String = ""
     
     init(named: String = ""){

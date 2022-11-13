@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Resolver: Resolving {
+public final class Resolver: Resolving {
     
     private var dependencies = [String: AnyObject]()
     static let shared = Resolver()

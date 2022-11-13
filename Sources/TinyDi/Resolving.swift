@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Resolving {
+public protocol Resolving {
     static func resolve<T>(named: String) -> T
     static func inject<T>(dependency: T, named: String)
     static func register(context: (Resolving) -> Void)

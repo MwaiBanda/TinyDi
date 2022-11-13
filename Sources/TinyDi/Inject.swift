@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-struct Inject<T> {
+public struct Inject<T> {
     var named: String
     var wrappedValue: T {
         get {
