@@ -9,8 +9,8 @@ import Foundation
 
 
 public struct Single<T>: SingleType {
-    var type: T
-    var named: String
+    public var type: T
+    public var named: String
     
     public init(_ type: T, named: String = "") {
         self.named = named
