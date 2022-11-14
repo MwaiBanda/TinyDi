@@ -31,6 +31,8 @@ public struct Module {
                     
                 ) : dep.named))
             }
+        } else {
+            assertionFailure("Can not cast to DependencyModule")
         }
     }
 }
