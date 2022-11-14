@@ -12,7 +12,7 @@ public struct Single<T>: SingleType {
     var type: T
     var named: String
     
-    init(_ type: T, named: String = "") {
+    public init(_ type: T, named: String = "") {
         self.named = named
         self.type = type
     }
