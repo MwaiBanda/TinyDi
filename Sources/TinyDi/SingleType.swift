@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SingleType {
+public protocol SingleType {
     associatedtype T
     var type: T { get }
     var named: String { get }

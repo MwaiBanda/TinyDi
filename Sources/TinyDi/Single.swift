@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Single<T>: SingleType {
+public struct Single<T>: SingleType {
     var type: T
     var named: String
     
