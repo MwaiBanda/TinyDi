@@ -10,8 +10,8 @@ import Foundation
 @resultBuilder
 public struct Module {
     public static func buildBlock<T>(_ dependencies: T...) -> Void {
-        let module = dependencies[0] as! DependencyModule
-        module.dependencies.forEach { dep in
+        let module = dependencies[0] as! () -> DependencyModule
+        module().dependencies.forEach { dep in
             Resolver.inject(dependency: dep.type, named: (dep.named.isEmpty ? String(
                 String(describing: dep.self)
                     .drop(while: { $0 != Character("<")})
