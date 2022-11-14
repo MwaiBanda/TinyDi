@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DependencyModule {
+public struct DependencyModule {
     var dependencies: [any SingleType]
     init(_ dependencies: [any SingleType]) {
         self.dependencies = dependencies
