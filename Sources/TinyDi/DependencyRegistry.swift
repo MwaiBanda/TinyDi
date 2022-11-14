@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DependencyRegistry {
+public final class DependencyRegistry {
      func clear(onCompletion: @escaping () -> Void) {
           Resolver.clear(onCompletion: onCompletion)
       }
