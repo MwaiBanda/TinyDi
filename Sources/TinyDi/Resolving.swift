@@ -8,14 +8,14 @@
 import Foundation
 
 public protocol Resolving {
-    static func resolve<T>(named: String) -> T
-    static func inject<T>(dependency: T, named: String)
-    static func register(context: (Resolving) -> Void)
-    static func clear(onCompletion: @escaping () -> Void)
-    static func release<T>(_ dependency: T, named: String)
-    func resolve<T>() -> T
-    func resolve<T>(named: String) -> T
-    func inject<T>(_ dependency: T, named: String)
-    func release<T>(_ dependency: T, named: String)
-    func clear(onCompletion: @escaping () -> Void)
+    public static func resolve<T>(named: String) -> T
+    public static func inject<T>(dependency: T, named: String)
+    public static func register(context: (Resolving) -> Void)
+    public static func clear(onCompletion: @escaping () -> Void)
+    public static func release<T>(_ dependency: T, named: String)
+    public func resolve<T>() -> T
+    public func resolve<T>(named: String) -> T
+    public func inject<T>(_ dependency: T, named: String)
+    public func release<T>(_ dependency: T, named: String)
+    public func clear(onCompletion: @escaping () -> Void)
 }

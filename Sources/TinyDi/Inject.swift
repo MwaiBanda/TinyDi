@@ -9,23 +9,23 @@ import Foundation
 
 @propertyWrapper
 public struct Inject<T> {
-    var named: String
-    var wrappedValue: T {
+    public var named: String
+    public var wrappedValue: T {
         get {
             Resolver.resolve(named: named)
         }
     }
-    init(named: String = ""){
+    public init(named: String = ""){
         self.named = named
     }
     
-    func release<T>(_ type: T) {
+    public func release<T>(_ type: T) {
         Resolver.release(type)
     }
-    func release() {
+    public func release() {
         Resolver.release(wrappedValue)
     }
-    func release(named: String) {
+    public func release(named: String) {
         Resolver.release(wrappedValue, named: named)
     }
 }

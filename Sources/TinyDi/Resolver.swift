@@ -9,30 +9,30 @@ import Foundation
 
 public final class Resolver: Resolving {
     
-    private var dependencies = [String: AnyObject]()
-    static let shared = Resolver()
+    public private(set) var dependencies = [String: AnyObject]()
+    public static let shared = Resolver()
     
-    static func inject<T>(dependency: T, named: String){
+    public static func inject<T>(dependency: T, named: String){
         shared.inject(dependency, named: named)
     }
     
-    static func resolve<T>(named: String) -> T {
+    public static func resolve<T>(named: String) -> T {
         shared.resolve(named: named)
     }
-    static func register(context: (Resolving) -> Void) {
+    public static func register(context: (Resolving) -> Void) {
         context(shared)
     }
-    static func clear(onCompletion: @escaping () -> Void) {
+    public static func clear(onCompletion: @escaping () -> Void) {
         shared.clear(onCompletion: onCompletion)
     }
-    static func release<T>(_ dependency: T, named: String = "") {
+    public static func release<T>(_ dependency: T, named: String = "") {
         shared.release(dependency, named: named)
     }
-    internal func inject<T>(_ dependency: T, named: String = "") {
+    public func inject<T>(_ dependency: T, named: String = "") {
         let key = (named.isEmpty ? String(describing: T.self) : named)
         dependencies[key] = dependency as AnyObject
     }
-    internal func resolve<T>() -> T {
+    public func resolve<T>() -> T {
         let key = String(describing: T.self)
         let dependency = dependencies[key] as? T
         assert(dependency != nil, "No dependency found of \(key)")
@@ -40,21 +40,21 @@ public final class Resolver: Resolving {
     }
     
    
-    internal func resolve<T>(named: String = "") -> T {
+    public func resolve<T>(named: String = "") -> T {
         let key = (named.isEmpty ? String(describing: T.self) : named)
         let dependency = dependencies[key] as? T
         assert(dependency != nil, "No dependency found of \(key)")
         return dependency!
     }
     
-    internal func release<T>(_ dependency: T, named: String) {
+    public func release<T>(_ dependency: T, named: String) {
         let key = (named.isEmpty ? String(describing: T.self) : named)
             .replacingOccurrences(of: ".Protocol", with: "")
         dependencies[key] = nil
         print("[AFTER RELEASE]: \(dependencies)")
     }
     
-    internal func clear(onCompletion: @escaping () -> Void) {
+    public func clear(onCompletion: @escaping () -> Void) {
         dependencies.removeAll()
         onCompletion()
     }
