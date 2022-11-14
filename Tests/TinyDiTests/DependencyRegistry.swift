@@ -12,7 +12,7 @@ import Foundation
 extension DependencyRegistry {
     func injectTest() {
         Resolver.register { resolver in
-            singletonModule()
+            testModule()
         }
     }
 }

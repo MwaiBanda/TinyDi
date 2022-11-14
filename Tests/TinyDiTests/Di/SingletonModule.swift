@@ -10,7 +10,7 @@ import XCTest
 @testable import TinyDi
 
 @Module
-func singletonModule() {
+func testModule() {
     DependencyModule([
         Single<AuthProviding>(Auth()),
         Single<DataProviding>(Data()),
