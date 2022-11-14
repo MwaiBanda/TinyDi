@@ -12,7 +12,7 @@ public struct TinyModule {
     public static func buildBlock<T>(_ dependencies: T...) -> Void {
         if let module = dependencies[0] as? Module {
             module.dependencies.forEach { dep in
-                Resolver.inject(dependency: dep.type, named: (dep.named.isEmpty ? String(
+                TDi.inject(dependency: dep.type, named: (dep.named.isEmpty ? String(
                     String(describing: dep.self)
                         .drop(while: { $0 != Character("<")})
                         .split(separator: ">")

@@ -11,7 +11,7 @@ import Foundation
 
 extension DependencyRegistry {
     func injectTest() {
-        Resolver.register { resolver in
+        TDi.inject { resolver in
             authModule()
             dataModule(resolver: resolver)
         }

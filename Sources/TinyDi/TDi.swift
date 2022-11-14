@@ -7,10 +7,10 @@
 
 import Foundation
 
-public final class Resolver: TinyDi {
+public final class TDi: TinyDi {
     
     public private(set) var dependencies = [String: AnyObject]()
-    public static let shared = Resolver()
+    public static let shared = TDi()
     
     public static func inject<T>(dependency: T, named: String){
         shared.inject(dependency, named: named)
@@ -19,7 +19,7 @@ public final class Resolver: TinyDi {
     public static func resolve<T>(named: String) -> T {
         shared.resolve(named: named)
     }
-    public static func register(context: (TinyDi) -> Void) {
+    public static func inject(context: (TinyDi) -> Void) {
         context(shared)
     }
     public static func clear(onCompletion: @escaping () -> Void) {

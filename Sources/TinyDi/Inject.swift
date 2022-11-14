@@ -12,7 +12,7 @@ public struct Inject<T> {
     public var named: String
     public var wrappedValue: T {
         get {
-            Resolver.resolve(named: named)
+            TDi.resolve(named: named)
         }
     }
     public init(named: String = ""){
@@ -20,12 +20,12 @@ public struct Inject<T> {
     }
     
     public func release<T>(_ type: T) {
-        Resolver.release(type)
+        TDi.release(type)
     }
     public func release() {
-        Resolver.release(wrappedValue)
+        TDi.release(wrappedValue)
     }
     public func release(named: String) {
-        Resolver.release(wrappedValue, named: named)
+        TDi.release(wrappedValue, named: named)
     }
 }

@@ -17,7 +17,7 @@ public struct Singleton {
     
     public static func buildBlock<T>(_ dependencies: T...) -> Void {
             dependencies.forEach { dependency in
-                Resolver.inject(dependency: dependency, named: named)
+                TDi.inject(dependency: dependency, named: named)
             
         }
     }

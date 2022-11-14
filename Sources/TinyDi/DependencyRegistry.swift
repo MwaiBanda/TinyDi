@@ -9,7 +9,7 @@ import Foundation
 
 public final class DependencyRegistry {
      public func clear(onCompletion: @escaping () -> Void) {
-          Resolver.clear(onCompletion: onCompletion)
+          TDi.clear(onCompletion: onCompletion)
       }
       static public let shared = DependencyRegistry()
       private init() { }

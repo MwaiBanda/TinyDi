@@ -15,6 +15,6 @@ public struct Binds<T> {
     public init(wrappedValue: T, named: String = "") {
         self.wrappedValue = wrappedValue
         self.named = named
-        Resolver.inject(dependency: self.wrappedValue, named: named)
+        TDi.inject(dependency: self.wrappedValue, named: named)
     }
 }
