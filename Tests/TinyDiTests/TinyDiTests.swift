@@ -3,7 +3,7 @@ import XCTest
 
 
 final class TinyDiTests: BaseXCTestCase {
-    @Inject private var auth: AuthProviding
+    @Inject private var data: DataProviding
 
 
     override func setUpWithError() throws {
@@ -15,13 +15,13 @@ final class TinyDiTests: BaseXCTestCase {
 
     }
     func testExample() throws {
-        auth.provide()
+        data.provide()
         
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
      
-        XCTAssertEqual(String(describing: auth),String(describing: "TinyDiTests.Auth"))
+        XCTAssertEqual(String(describing: data),String(describing: "TinyDiTests.Data"))
     }
 }
 protocol AuthProviding {
@@ -38,8 +38,14 @@ protocol DataProviding {
     func provide()
 }
 class Data: DataProviding {
+    public init(auth: AuthProviding) {
+        self.auth = auth
+    }
+    
+    private var auth: AuthProviding
     func provide() {
-        print("Data")
+        print("Data - Data")
+        auth.provide()
     }
 }
 

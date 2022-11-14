@@ -9,10 +9,18 @@ import Foundation
 import XCTest
 @testable import TinyDi
 
-@Module
-func testModule() {
-    DependencyModule([
-        Single<AuthProviding>(Auth()),
-        Single<DataProviding>(Data()),
-    ])
+@TinyModule
+func authModule() {
+    Module(
+        Single<AuthProviding>(Auth())
+    )
 }
+
+@TinyModule
+func dataModule(resolver: TinyDi) {
+    Module(
+        Single<DataProviding>(Data(auth: resolver.resolve()))
+    )
+}
+
+

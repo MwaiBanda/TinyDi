@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class Resolver: Resolving {
+public final class Resolver: TinyDi {
     
     public private(set) var dependencies = [String: AnyObject]()
     public static let shared = Resolver()
@@ -19,7 +19,7 @@ public final class Resolver: Resolving {
     public static func resolve<T>(named: String) -> T {
         shared.resolve(named: named)
     }
-    public static func register(context: (Resolving) -> Void) {
+    public static func register(context: (TinyDi) -> Void) {
         context(shared)
     }
     public static func clear(onCompletion: @escaping () -> Void) {

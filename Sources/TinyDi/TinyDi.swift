@@ -7,10 +7,10 @@
 
 import Foundation
 
-public protocol Resolving {
+public protocol TinyDi {
     static func resolve<T>(named: String) -> T
     static func inject<T>(dependency: T, named: String)
-    static func register(context: (Resolving) -> Void)
+    static func register(context: (TinyDi) -> Void)
     static func clear(onCompletion: @escaping () -> Void)
     static func release<T>(_ dependency: T, named: String)
     func resolve<T>() -> T

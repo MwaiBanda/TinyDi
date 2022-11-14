@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol SingleType {
-    associatedtype T
+    associatedtype T: Any
     var type: T { get }
     var named: String { get }
 }
