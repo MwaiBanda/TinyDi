@@ -16,8 +16,13 @@ public struct Singleton {
     }
     
     public static func buildBlock<T>(_ dependencies: T...) -> Void {
-        dependencies.forEach { dependency in
-            Resolver.inject(dependency: dependency, named: named)
+            dependencies.forEach { dependency in
+                Resolver.inject(dependency: dependency, named: named)
+            
         }
     }
 }
+
+
+
+
