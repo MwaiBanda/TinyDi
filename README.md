@@ -164,16 +164,7 @@ func controllerModule(resolver: TinyDi) {
 }
 ```
 
-```swift
-extension DependencyRegistry {
-    func inject() {
-        TDi.inject(context: {  resolver in
-            singletonModule()
-            controllerModule(resolver: resolver)
-        })
-    }
-}
-```
+ViewModel:
 
 #### Using Injected Dependencies
 
@@ -195,7 +186,14 @@ Inject(named: `String`):
 Within a Module:
 
 ```swift
-
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject(context: {  resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+        })
+    }
+}
 ```
 
 ### Modules
