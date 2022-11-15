@@ -25,7 +25,7 @@ branch main
 * [Setup](#setup)
   * [initial](#gradle)
     * [Extending the Dependenpce Registry](#extending-the-dependenpce-registry)
-    * [Using Injected dependencies`](#using-apply-plugin-the-old-way)
+    * [Using Injected dependencies`](#using-injected-dependencies)
   * [Modules](#android)
     * [Using `@TinyModule`](#using-tinymodule)
     * [Named Insertion](#named-insertion)
@@ -36,10 +36,10 @@ branch main
 <!--- END -->
 
 * **Additional links**
-  * [Singleton Example](docs/serialization-guide.md)
-  * [Multi-Module Example](https://kotlinlang.org/api/kotlinx.serialization/)
-  * [Production Example](https://kotlinlang.org/api/kotlinx.serialization/)
-
+  * [Singleton Example]()
+  * [Multi-Module Example]()
+  * [Production Example]()
+*Add links * 
 ## Introduction and references
 
 Here is a small example.
