@@ -1,4 +1,4 @@
-# Swift / Dependency Injection
+# Swift • Dependency Injection • TinyDi
 
 TinyDi consists is a multi-module dependency injection solution, It uses property wrapper syntax.
 To make it easy for you to declare and design.
