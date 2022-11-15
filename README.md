@@ -140,7 +140,39 @@ Binds:
 ```
 TinyModule:
 ```swift
+@TinyModule
+func singletonModule(){
+    Module(
+        Single(Auth.auth()),
+        Single(DatabaseDriverFactory()),
+        Single(AVPlayer())
+    )
+}
+```
 
+```swift
+@TinyModule
+func controllerModule(resolver: TinyDi) {
+    Module(
+        Single<PaymentController>(PaymentControllerImpl()),
+        Single<TransactionController>(TransactionControllerImpl(driverFactory: resolver.resolve())),
+        Single<LocalDefaultsController>(LocalDefaultsControllerImpl()),
+        Single<UserController>(UserControllerImpl(driverFactory: resolver.resolve())),
+        Single<BillingAddressController>(BillingAddressControllerImpl(driverFactory: resolver.resolve())),
+        Single<AuthController>(AuthControllerImpl())
+    )
+}
+```
+
+```swift
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject(context: {  resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+        })
+    }
+}
 ```
 
 #### Using Injected Dependencies
