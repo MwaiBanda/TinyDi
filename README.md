@@ -240,4 +240,86 @@ class AuthViewModel: ObservableObject {
 ### Testing
 TinyDi can also be used to provide your test dependencies 
 
+<b>Step 1</b>: <br>
+Create your test modules
 
+```swift
+import Foundation
+import XCTest
+@testable import TinyDi
+
+@TinyModule
+func authModule() {
+    Module(
+        Single<AuthProviding>(Auth())
+    )
+}
+
+@TinyModule
+func dataModule(resolver: TinyDi) {
+    Module(
+        Single<DataProviding>(Data(auth: resolver.resolve()))
+    )
+}
+```
+
+<b>Step 2</b>: <br>
+Extend `DependencyRegistry` & create an initialisation function then add your modules
+
+```swift
+import XCTest
+@testable import TinyDi
+import Foundation
+
+extension DependencyRegistry {
+    func injectTest() {
+        TDi.inject { resolver in
+            authModule()
+            dataModule(resolver: resolver)
+        }
+    }
+}
+
+```
+
+<b>Step 3</b>: <br>
+Create a base test class
+
+```swift
+import Foundation
+import XCTest
+@testable import TinyDi
+
+class BaseXCTestCase: XCTestCase {
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        DependencyRegistry.shared.clear {
+            DependencyRegistry.shared.injectTest()
+
+        }
+    }
+    
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+    }
+}
+```
+
+<b>Use dependencies</b>
+
+```swift
+final class TinyDiTests: BaseXCTestCase {
+    @Inject private var data: DataProviding
+
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+    }
+    
+    override func tearDownWithError() throws {
+        try super.tearDownWithError()
+        _data.release()
+
+    }
+...
+```
