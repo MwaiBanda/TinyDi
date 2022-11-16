@@ -25,7 +25,7 @@ branch main
 * [Setup](#setup)
     * [Extending the Dependenpce Registry](#extending-the-dependenpce-registry)
     * [Other ways to provide dependencies](#other-ways-to-provide-dependencies)
-    * [Using Injected dependencies`](#using-injected-dependencies)
+    * [Getting dependencies](#getting-dependencies)
 * [Testing](#testing)
 
 <!--- END -->
@@ -119,24 +119,13 @@ func main() {
 #### Other ways to provide dependencies
 
 TinyDi offers other ways to for you to provide your dependencies. Dependencies can be provide with 
-the following property-wrappers `Binds` & `@TinyModule`:
+the following property-wrappers  & `@TinyModule` & `@Binds`:
 
-Binds:
 
-```swift
- @Binds var authId: String = {
-     Auth.auth().currentUser?.id ?? ""
- }()
-```
+<b>@TinyModule</b>: <br>
+Functions prefixed with `@TinyModule` allow you to build modules of dependencies within them.
+Modules allow easier separation of different dependencies.
 
-Binds(named: `String`):
-
-```swift
- @Binds(named: "APIKey") var apiKey: String = {
-     "XXX.xxx.xx.00"
- }()
-```
-TinyModule:
 ```swift
 @TinyModule
 func singletonModule(){
@@ -146,6 +135,9 @@ func singletonModule(){
     )
 }
 ```
+In cases were you need dependencies from another module, make `(resolver: TinyDi)` the function
+signature. With reference to the resolver you can call `resolver.resolve()` in place of the required 
+dependency
 
 ```swift
 @TinyModule
@@ -156,24 +148,88 @@ func controllerModule(resolver: TinyDi) {
     )
 }
 ```
+After creating your modules, add them to the Dependency Registry
+
+```swift
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject { resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+        }
+    }
+}
+```
 > You can get the full code [here](https://github.com/MwaiBanda/Momentum/tree/master/MomentumiOS/MomentumiOS/Di).
 
-ViewModel:
+<b>@Binds</b>: <br>
+Variables prefixed with the `@Binds` allow you provide dependencies in them. A typical usecase would be dependency inversion
 
-#### Using Injected Dependencies
+```swift
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject { resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+            
+            @Binds var authController: AuthController = {
+                AuthControllerImpl()
+            }()
+        }
+    }
+}
+```
 
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
+```swift
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject { resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+            
+            @Binds var authId: String = {
+                Auth.auth().currentUser?.id ?? ""
+            }()
+        }
+    }
+}
+```
+In cases, were you want to bind dependencies of the same type. Use `@Binds(named: "SomeKey")` to differentiate 
+one from the other.
 
-Inject:
+<b>@Binds(named: `String`)</b>:
+
+```swift
+extension DependencyRegistry {
+    func inject() {
+        TDi.inject { resolver in
+            singletonModule()
+            controllerModule(resolver: resolver)
+           
+            @Binds(named: "APIKey") var apiKey: String = {
+                 "XXX.xxx.xx.00"
+            }()
+        }
+    }
+}
+```
+
+
+#### Getting Dependencies
+
+Variables prefixed with the `@Inject` allow you retrive dependencies from them by 
+declaring an explicity type variable 
+
+<b>@Inject</b>:
 
 ```swift
 class TransactionViewModel: ObservableObject {
     @Inject private var controller: TransactionController
 ...
 ```
+Alternatively, you can retrive speafic named dependencies
 
-Inject(named: `String`):
+<b>@Inject(named: `String`)</b>:
 
 ```swift
 class AuthViewModel: ObservableObject {
@@ -181,20 +237,7 @@ class AuthViewModel: ObservableObject {
 ...
 ```
 
-Within a Module:
-
-```swift
-extension DependencyRegistry {
-    func inject() {
-        TDi.inject(context: {  resolver in
-            singletonModule()
-            controllerModule(resolver: resolver)
-        })
-    }
-}
-```
-
 ### Testing
+TinyDi can also be used to provide your test dependencies 
 
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
+
