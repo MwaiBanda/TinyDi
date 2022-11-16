@@ -23,15 +23,10 @@ branch main
 * [Introduction and references](#introduction-and-references)
 * [Installation](#installation)
 * [Setup](#setup)
-  * [initial](#gradle)
     * [Extending the Dependenpce Registry](#extending-the-dependenpce-registry)
+    * [Other ways to provide dependencies](#other-ways-to-provide-dependencies)
     * [Using Injected dependencies`](#using-injected-dependencies)
-  * [Modules](#android)
-    * [Using `@TinyModule`](#using-tinymodule)
-    * [Named Insertion](#named-insertion)
-  * [Retrival](#retrival)
-  * [Named Retrival](#named-retrival)
-  * [Testing](#testing)
+* [Testing](#testing)
 
 <!--- END -->
 
@@ -70,7 +65,6 @@ func main() {
 ``` 
 
 > You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Demos/Singleton/Singleton.playground/Contents.swift).
-<!--- TEST_NAME ReadmeTest -->
 
 
 ## Setup
@@ -122,30 +116,33 @@ func main() {
 }
 ```
 
-#### Injecting dependencies
+#### Other ways to provide dependencies
 
-TinyDi offers multiple ways to for you to provide your dependencies. Dependencies can be provide with 
-the following property-wrappers `@Singleton`, `Binds` & `@TinyModule`:
-
-Singleton:
-
-```swift
-
-```
+TinyDi offers other ways to for you to provide your dependencies. Dependencies can be provide with 
+the following property-wrappers `Binds` & `@TinyModule`:
 
 Binds:
 
 ```swift
+ @Binds var authId: String = {
+     Auth.auth().currentUser?.id ?? ""
+ }()
+```
 
+Binds(named: `String`):
+
+```swift
+ @Binds(named: "APIKey") var apiKey: String = {
+     "XXX.xxx.xx.00"
+ }()
 ```
 TinyModule:
 ```swift
 @TinyModule
 func singletonModule(){
     Module(
-        Single(Auth.auth()),
-        Single(DatabaseDriverFactory()),
-        Single(AVPlayer())
+        Single(Auth.auth(), named: "Auth"), // Optional naming of dependencies within a module
+        Single(DatabaseDriverFactory())
     )
 }
 ```
@@ -154,15 +151,12 @@ func singletonModule(){
 @TinyModule
 func controllerModule(resolver: TinyDi) {
     Module(
-        Single<PaymentController>(PaymentControllerImpl()),
         Single<TransactionController>(TransactionControllerImpl(driverFactory: resolver.resolve())),
-        Single<LocalDefaultsController>(LocalDefaultsControllerImpl()),
-        Single<UserController>(UserControllerImpl(driverFactory: resolver.resolve())),
-        Single<BillingAddressController>(BillingAddressControllerImpl(driverFactory: resolver.resolve())),
         Single<AuthController>(AuthControllerImpl())
     )
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/tree/master/MomentumiOS/MomentumiOS/Di).
 
 ViewModel:
 
@@ -174,13 +168,17 @@ words which don't look even slightly believable. If you are going to use a passa
 Inject:
 
 ```swift
-
+class TransactionViewModel: ObservableObject {
+    @Inject private var controller: TransactionController
+...
 ```
 
 Inject(named: `String`):
 
 ```swift
-
+class AuthViewModel: ObservableObject {
+    @Inject(named: "Auth") private var auth: Auth
+...
 ```
 
 Within a Module:
@@ -195,34 +193,6 @@ extension DependencyRegistry {
     }
 }
 ```
-
-### Modules
-
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
-
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
-
-```swift
-
-```
-
-There are many variations of passages of Lorem Ipsum available:
-
-```swift
-
-```
-
-### Retrival
-
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
-
-### Named Retrival
-
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected
-words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't.
 
 ### Testing
 
