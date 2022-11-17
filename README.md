@@ -1,7 +1,7 @@
 # Swift • Dependency Injection • TinyDi
 
-TinyDi is a multi-module dependency injection solution, It uses property wrapper syntax.
-To make it easy for you to declare & manage your dependencies.
+TinyDi is a multi-module dependency injection solution. It uses property wrapper syntax,
+to make it easy for you to declare & manage your dependencies.
 
 * Supports Swift functions marked as `@TinyModule` & `@Singleton`.
 * Supports Swift variables marked as `@Inject` & `@Binds`.
