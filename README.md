@@ -197,7 +197,7 @@ extension DependencyRegistry {
     }
 }
 ```
-> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOS/Di/SingletonModule.swift).
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOSTests/Di/DiRegistry.swift).
 
 
 In cases, were you want to bind dependencies of the same type. Use `@Binds(named: "SomeKey")` to differentiate 
@@ -219,6 +219,7 @@ extension DependencyRegistry {
     }
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOSTests/Di/DiRegistry.swift).
 
 
 #### Getting Dependencies
