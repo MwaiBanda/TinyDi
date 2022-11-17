@@ -1,14 +1,13 @@
 # Swift • Dependency Injection • TinyDi
 
-TinyDi consists is a multi-module dependency injection solution, It uses property wrapper syntax.
-To make it easy for you to declare and design.
+TinyDi is a multi-module dependency injection solution, It uses property wrapper syntax.
+To make it easy for you to declare & manage your dependencies.
 
 * Supports Swift functions marked as `@TinyModule` & `@Singleton`.
 * Supports Swift variables marked as `@Inject` & `@Binds`.
 * Supports SwiftUI and UIKit 
 
 ### Installation
-A detailed guide for installation can be found in Installation Guide.
 
 Swift Package Manager
 File > Swift Packages > Add Package Dependency <br>
@@ -31,10 +30,9 @@ branch main
 <!--- END -->
 
 * **Additional links**
-  * [Singleton Example]()
-  * [Multi-Module Example]()
-  * [Production Example]()
-*Add links * 
+  * [Singleton Example](https://github.com/MwaiBanda/TinyDi/tree/main/Demos/Singleton/Singleton.playground)
+  * [Multi-Module Example](https://github.com/MwaiBanda/TinyDi/tree/main/Demos/MultiModule/MultiModule.playground)
+  * [Production Example](https://github.com/MwaiBanda/Momentum/tree/master/MomentumiOS/MomentumiOS)
 ## Introduction and references
 
 Here is a small example.
@@ -115,6 +113,7 @@ func main() {
     
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Demos/Singleton/Singleton.playground/Contents.swift).
 
 #### Other ways to provide dependencies
 
@@ -135,6 +134,8 @@ func singletonModule(){
     )
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOS/Di/SingletonModule.swift).
+
 In cases were you need dependencies from another module, make `(resolver: TinyDi)` the function
 signature. With reference to the resolver you can call `resolver.resolve()` in place of the required 
 dependency
@@ -148,6 +149,8 @@ func controllerModule(resolver: TinyDi) {
     )
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOS/Di/ControllerModule.swift).
+
 After creating your modules, add them to the Dependency Registry
 
 ```swift
@@ -160,7 +163,7 @@ extension DependencyRegistry {
     }
 }
 ```
-> You can get the full code [here](https://github.com/MwaiBanda/Momentum/tree/master/MomentumiOS/MomentumiOS/Di).
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOS/iOSApp.swift).
 
 <b>@Binds</b>: <br>
 Variables prefixed with the `@Binds` allow you provide dependencies in them. A typical usecase would be dependency inversion
@@ -194,6 +197,9 @@ extension DependencyRegistry {
     }
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/Momentum/blob/master/MomentumiOS/MomentumiOS/Di/SingletonModule.swift).
+
+
 In cases, were you want to bind dependencies of the same type. Use `@Binds(named: "SomeKey")` to differentiate 
 one from the other.
 
@@ -227,7 +233,7 @@ class TransactionViewModel: ObservableObject {
     @Inject private var controller: TransactionController
 ...
 ```
-Alternatively, you can retrive speafic named dependencies
+Alternatively, you can retrive specific named dependencies
 
 <b>@Inject(named: `String`)</b>:
 
@@ -262,6 +268,7 @@ func dataModule(resolver: TinyDi) {
     )
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Tests/TinyDiTests/Di/TestModule.swift).
 
 <b>Step 2</b>: <br>
 Extend `DependencyRegistry` & create an initialisation function then add your modules
@@ -281,6 +288,7 @@ extension DependencyRegistry {
 }
 
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Tests/TinyDiTests/DependencyRegistry.swift).
 
 <b>Step 3</b>: <br>
 Create a base test class
@@ -304,6 +312,7 @@ class BaseXCTestCase: XCTestCase {
     }
 }
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Tests/TinyDiTests/BaseXCTestCase.swift).
 
 <b>Use dependencies</b>
 
@@ -323,3 +332,4 @@ final class TinyDiTests: BaseXCTestCase {
     }
 ...
 ```
+> You can get the full code [here](https://github.com/MwaiBanda/TinyDi/blob/main/Tests/TinyDiTests/TinyDiTests.swift).
