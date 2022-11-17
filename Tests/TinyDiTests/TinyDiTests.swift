@@ -12,6 +12,7 @@ final class TinyDiTests: BaseXCTestCase {
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
+        _data.release()
 
     }
     func testExample() throws {
