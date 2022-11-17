@@ -224,7 +224,7 @@ extension DependencyRegistry {
 
 #### Getting Dependencies
 
-Variables prefixed with the `@Inject` allow you retrive dependencies from them by 
+Variables prefixed with the `@Inject` allow you retrieve dependencies from them by 
 declaring an explicity type variable 
 
 <b>@Inject</b>:
