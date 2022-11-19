@@ -5,7 +5,7 @@ import XCTest
 final class TinyDiTests: BaseXCTestCase {
     @Inject private var data: DataProviding
 
-
+//    = Data(auth: Auth())
     override func setUpWithError() throws {
         try super.setUpWithError()
     }
