@@ -19,7 +19,7 @@ struct TinyObject<T: ObservableObject>: DynamicProperty {
             TDi.inject(dependency: newValue, named: String(describing: T.self))
         }
     }
-    public init<S: ObservableObject>(wrappedValue value: T) {
+    public init(wrappedValue value: T) {
         self.wrappedValue = value
         TDi.inject(dependency: value, named: String(describing: T.self))
         
