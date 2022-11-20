@@ -32,10 +32,7 @@ public struct TinyObject<T>: DynamicProperty where T: ObservableObject {
         object = thunk()
     }
 
-    public func update(){
-        
-        print("Update")
-    }
+ 
     @MainActor
     public var projectedValue: ObservedObject<T>.Wrapper {
         get {
