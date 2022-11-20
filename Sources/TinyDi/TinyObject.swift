@@ -19,17 +19,20 @@ struct TinyObject<T: ObservableObject>: DynamicProperty {
             TDi.inject(dependency: newValue, named: String(describing: T.self))
         }
     }
-    public init(wrappedValue value: T) {
-        self.wrappedValue = value
-        TDi.inject(dependency: value, named: String(describing: T.self))
-        
-    }
-    
-    public init(initialValue value: T) {
+    public init(wrappedValue value: T, named: String = "") {
+        self.named = named
         self.wrappedValue = value
         TDi.inject(dependency: value, named: String(describing: T.self))
     }
     
+    public init(initialValue value: T, named: String = "") {
+        self.named = named
+        self.wrappedValue = value
+        TDi.inject(dependency: value, named: String(describing: T.self))
+    }
+    func update(){
+        print("Update")
+    }
     public var projectedValue: StateObject<T> {
         return Binding(get: { return self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
     }
