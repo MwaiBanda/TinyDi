@@ -1,10 +1,18 @@
 import XCTest
 @testable import TinyDi
+import SwiftUI
 
+class ExampleViewModel: ObservableObject {
+    var items = [String]()
+    func getItems() {
+        items.append("New Word")
+        print(items)
+    }
+}
 
 final class TinyDiTests: BaseXCTestCase {
     @Inject private var data: DataProviding
-
+    @TinyObject private var viewModel = ExampleViewModel()
 //    = Data(auth: Auth())
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -12,10 +20,9 @@ final class TinyDiTests: BaseXCTestCase {
     
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        _data.release()
 
     }
-    func testExample() throws {
+    func dataTest() throws {
         data.provide()
         
         // This is an example of a functional test case.
@@ -24,7 +31,14 @@ final class TinyDiTests: BaseXCTestCase {
      
         XCTAssertEqual(String(describing: data),String(describing: "TinyDiTests.Data"))
     }
+    
+    func tinyObjectTest() {
+        viewModel.getItems()
+        XCTAssertEqual([String](), viewModel.items)
+    }
 }
+
+
 protocol AuthProviding {
     func provide()
 }

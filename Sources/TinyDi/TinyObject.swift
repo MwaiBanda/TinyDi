@@ -8,23 +8,32 @@
 import Foundation
 import SwiftUI
 
+@available(iOS 14.0, *)
 @propertyWrapper
 public struct TinyObject<T>: DynamicProperty where T: ObservableObject {
+    @State var object: T? = nil
     @MainActor
     public var wrappedValue: T {
         get {
-            TDi.resolve()
+            if (object != nil) {
+                return object!
+            } else {
+                return TDi.resolve()
+
+            }
         }
         nonmutating set {
+            object = newValue
             TDi.inject(dependency: newValue, named: String(describing: T.self))
         }
     }
-    @inlinable
     public init(wrappedValue thunk: @autoclosure @escaping () -> T) {
         TDi.inject(dependency: thunk(), named: String(describing: T.self))
+        object = thunk()
     }
 
-    func update(){
+    public func update(){
+        
         print("Update")
     }
     @MainActor
