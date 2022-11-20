@@ -9,44 +9,31 @@ import Foundation
 import SwiftUI
 
 @propertyWrapper
-struct TinyObject<T: ObservableObject>: DynamicProperty {
-    public var named: String
+struct TinyObject<T>: DynamicProperty where T: ObservableObject {
+    @MainActor
     public var wrappedValue: T {
         get {
-            TDi.resolve(named: named)
+            TDi.resolve()
         }
         nonmutating set {
             TDi.inject(dependency: newValue, named: String(describing: T.self))
         }
     }
-    public init(wrappedValue value: T, named: String = "") {
-        self.named = named
-        self.wrappedValue = value
-        TDi.inject(dependency: value, named: String(describing: T.self))
+    @inlinable
+    public init(wrappedValue thunk: @autoclosure @escaping () -> T) {
+        TDi.inject(dependency: thunk(), named: String(describing: T.self))
     }
-    
-    public init(initialValue value: T, named: String = "") {
-        self.named = named
-        self.wrappedValue = value
-        TDi.inject(dependency: value, named: String(describing: T.self))
-    }
+
     func update(){
         print("Update")
     }
-    public var projectedValue: Binding<T> {
-        return Binding(get: { return self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
-    }
-    public init(named: String = ""){
-        self.named = named
-    }
-    
-    public func release<T>(_ type: T) {
-        TDi.release(type)
-    }
-    public func release() {
-        TDi.release(wrappedValue)
-    }
-    public func release(named: String) {
-        TDi.release(wrappedValue, named: named)
+    @MainActor
+    public var projectedValue: ObservedObject<T>.Wrapper {
+        get {
+            TDi.resolve()
+        }
+        nonmutating set {
+            TDi.inject(dependency: newValue, named: String(describing: T.self))
+        }
     }
 }

@@ -16,7 +16,7 @@ public final class TDi: TinyDi {
         shared.inject(dependency, named: named)
     }
     
-    public static func resolve<T>(named: String) -> T {
+    public static func resolve<T>(named: String = "") -> T {
         shared.resolve(named: named)
     }
     public static func inject(context: (TinyDi) -> Void) {
