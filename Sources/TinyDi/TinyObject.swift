@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 @propertyWrapper
-struct TinyObject<T>: DynamicProperty where T: ObservableObject {
+public struct TinyObject<T>: DynamicProperty where T: ObservableObject {
     @MainActor
     public var wrappedValue: T {
         get {
