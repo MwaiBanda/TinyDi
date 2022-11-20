@@ -33,7 +33,7 @@ struct TinyObject<T: ObservableObject>: DynamicProperty {
     func update(){
         print("Update")
     }
-    public var projectedValue: StateObject<T> {
+    public var projectedValue: Binding<T> {
         return Binding(get: { return self.wrappedValue }, set: { newValue in self.wrappedValue = newValue })
     }
     public init(named: String = ""){
