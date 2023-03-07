@@ -138,7 +138,8 @@ func singletonModule(){
 
 In cases were you need dependencies from another module, make `(resolver: TinyDi)` the function
 signature. With reference to the resolver you can call `resolver.resolve()` in place of the required 
-dependency
+dependency. Additionally, when providing a dependency you can explicitly specify it's type, this is useful 
+for dependency inversion
 
 ```swift
 @TinyModule
